@@ -1,0 +1,32 @@
+Backend Section
+
+Creat models and their migration
+php artisan make:model ModelName -m [channel,thread,answer,subscribe]
+
+Customizing Each Table Of Migration
+
+Creating relations IN Models
+
+*Git*
+creating Readme.md for describing details
+
+Creating new repository in git
+git init (master branch)
+
+if we want to create new branch for swiching to new(dev) branch
+git checkout -b -dev
+
+selecting all files
+git add .
+
+git commit -m "comment here"
+
+git status
+
+Input in github
+first : go to github -> create new repository
+second : copy git remote add origin ... and paste in terminal
+third : git push -u origin master in terminal
+
+
+
