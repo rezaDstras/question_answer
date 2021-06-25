@@ -7,6 +7,8 @@ Customizing Each Table Of Migration
 
 Creating relations IN Models
 
+
+---------------------------------------------
 *Git*
 creating Readme.md for describing details
 
@@ -29,4 +31,4 @@ second : copy git remote add origin ... and paste in terminal
 third : git push -u origin master in terminal
 
 
-
+-------------------
