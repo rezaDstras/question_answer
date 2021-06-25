@@ -32,3 +32,60 @@ third : git push -u origin master in terminal
 
 
 -------------------
+Authentication for API's using laravel documentation (SPA)
+use sanctum package in laravel
+
+install sanctum
+composer require laravel/sanctum
+
+publish config and it's migration
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+
+migrate table in database
+php artisan migrate
+
+add this ode in api in kernel.php
+EnsureFrontendRequestsAreStateful::class,
+
+go to config directory ->sanctum.php check items
+
+go to config directory -> modify cors.php =>[
+
+'paths' => ['api/*', 'sanctum/csrf-cookie'],
+'supports_credentials' => true,
+]
+
+----------------------------------------
+Creating Controllers
+php artisan make:controller API\v1\Auth\AuthController
+
+*use phpDoc for functions -> alt+enter in name of function and select phpDoc
+
+*use repository for data in functions which connected to database
+creating new directory in app as a Repositories
+and creating new php class file in it -> ex:UserRepositories
+
+selecting this part of code which connected to database and use under short code
+menu->refactor->extract->method(short_code ->ctr+alt+m)
+copy created code and paste in related repository
+
+use resolve() or app() function instead of modified previous code
+
+
+
+
+
+------------------------------------------------------
+Creating Test
+*write test for functions ->  alt+enter in name of function and select create new php test
+
+modify this test ase
+use Tests\TestCase;
+
+add Tests\Unit\... to the namespace of each test controller
+
+run in terminal by -> php artisan test
+
+--------------------------------------------------
+creating api route
+
