@@ -50,11 +50,23 @@ EnsureFrontendRequestsAreStateful::class,
 go to config directory ->sanctum.php check items
 
 go to config directory -> modify cors.php =>[
-
 'paths' => ['api/*', 'sanctum/csrf-cookie'],
 'supports_credentials' => true,
 ]
 
+
+add this trait to user model
+ use HasFactory, Notifiable , HasApiTokens;
+
+
+we can define prefix
+config->sanctum latest line
+'prefix'=>'/api'
+
+because for default mood is '/sanctum'   and we want use it like '/api'
+
+and in cors.php change it
+'paths' => ['api/*'],
 ----------------------------------------
 Creating Controllers
 php artisan make:controller API\v1\Auth\AuthController
@@ -70,13 +82,58 @@ menu->refactor->extract->method(short_code ->ctr+alt+m)
 copy created code and paste in related repository
 
 use resolve() or app() function instead of modified previous code
+-------------------------------------------------------------------------------------------
+Creating Factory For Each Model
+php artisan make:factory ChannelFactory --model=Channel
+
+------------------------------------------------------------------------------------------
+Creating Role & Permission
+
+use Spatie package
+
+first ->  composer require spatie/laravel-permission
+second -> publish its config and migration ->
+        php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+third->php artisan optimize:clear
+forth->php artisan migrate
+
+
+--defining default admin , role and permission for creating automatically in table when we go to production step--
+go to config->permission.php
+latest line
+
+so
+defining factory
+php artisan make:factory RoleFactory
+php artisan make:factory PermissionFactory
+
+and defining seeder for inserting automatically in database in production step
+php artisan make:seed RoleAndPermissionSeeder
+
+give method HasRoles to user model
+ -->use HasFactory, Notifiable , HasRoles;
+
+adding tree middleware in kernel.php in route middleware
+        'role' =>\Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission'=>\Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission'=>\Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
 
 
 
+for super admin should be add this code in authserviceprovider in boot
+ Gate::before(function ($user, $ability) {
+            return $user->hasRole('Super Admin') ? true : null;
+        });
+
+        because if user doesn't have permission which child of user's role if only have role ,it can get its permission automatically
+----------------------------------------------------------------------------------------------
+Creating Test ->TDD => test driven development
+
+feature test : for whole function of feature like auth => php artisan make:test API\v1\Thread\ThreadTest
+
+unit test : for small part of function
 
 
-------------------------------------------------------
-Creating Test
 *write test for functions ->  alt+enter in name of function and select create new php test
 
 modify this test ase
@@ -89,3 +146,60 @@ run in terminal by -> php artisan test
 --------------------------------------------------
 creating api route
 
+-----------------------------------------------------
+Creating Gate for user access to do each function
+
+go to authServiceProvider and define new gate
+
+------------------------------------------------------------
+creating notification
+
+run code for create table
+php artisan notification:table and then php artisan migrate
+
+
+create notification
+php artisan make:notification NewReplySubmitted
+
+in NewReplySubmitted
+
+1) in method __construct(Thread $thread) give thread object
+
+2)initialize Thread ->    private $thread;
+
+3) set database for return notification
+public function via($notifiable)
+      {
+          return ['database'];
+      }
+
+4)store in database
+public function toDatabase($notifiable)
+    {
+        return [
+            //
+        ];
+    }
+
+5)go to answerController  for giving notification to store method
+
+----------------------------------------------------------------------
+creat middleware for block user
+php artisan make:middleware UserBlock
+
+add this to kernel.php
+we can use this middleware in route or controller
+
+in controller
+//middleware to give access to unblock user
+    public function __construct()
+    {
+        $this->middleware('user-block')->except([
+            //except function that don't need authentication
+            'index',
+            'show',
+            .
+            .
+            .
+        ]);
+    }
