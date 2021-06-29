@@ -242,3 +242,32 @@ go to the sanctum documantation and copy cors and cookie and pas here
 -----------------------------------------------------
 create new directory for requests in src
 
+
+
+----------------------------------------------------------
+ register view
+
+create new directory in src->views for Auth
+create register component
+
+
+----------------------------------------------------------------
+install markdown editor
+in frontend directory
+$ npm install --save vue-markdown
+
+import this to related component for example single thread
+<script>
+import VueMarkdown from 'vue-markdown/src/VueMarkdown'
+</script>
+
+and add this
+new Vue({
+  components: {
+    VueMarkdown
+  }
+})
+
+and add this to code instead of <p></p>
+
+<vue-markdown>this is the default slot</vue-markdown>

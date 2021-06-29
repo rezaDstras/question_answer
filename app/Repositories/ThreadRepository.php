@@ -13,7 +13,14 @@ class ThreadRepository
 
     public function getAllThreads()
     {
-        return $threads = Thread::whereFlag(1)->latest()->get();
+        //if we want return whole data
+//        return $threads = Thread::query()->whereFlag(1)->with(['channel','user'])->latest()->paginate(10);
+
+        //if we want only a recognized data to return
+        return $threads = Thread::query()->whereFlag(1)->with([
+            'channel:id,name,slug',
+            'user:id,name'
+        ])->latest()->paginate(10);
     }
 
 

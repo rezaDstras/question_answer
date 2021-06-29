@@ -27,19 +27,41 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+    <router-link to="/register">
+        <v-btn
+            text
+        >
+            <span class="mr-2">Register</span>
+            <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+    </router-link>
+    <router-link to="/login">
+            <v-btn
+                text
+            >
+                <span class="mr-2">Login</span>
+                <v-icon>mdi-account</v-icon>
+            </v-btn>
+        </router-link>
     </v-app-bar>
 
     <v-main>
       <router-view/>
     </v-main>
+      <v-fab-transition>
+          <v-btn
+              color="blue"
+              fab
+              large
+              dark
+              bottom
+              left
+              class="v-btn--example ml-3 mb-5"
+              to="/create/thread"
+          >
+              <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+      </v-fab-transition>
   </v-app>
 </template>
 
