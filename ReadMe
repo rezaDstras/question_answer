@@ -203,3 +203,42 @@ in controller
             .
         ]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Front section
+
+create new vue.js project
+->vue create (name)
+
+install axios in top folder
+cd (name) \
+npm add axios
+
+npm run serve
+
+
+install ui package for vue.js ->vuetify
+vue add vuetify
+
+------------------------------------------------
+config axios
+
+create new javascript file named axios
+
+go to the sanctum documantation and copy cors and cookie and pas here
+
+-----------------------------------------------------
+create new directory for requests in src
+
